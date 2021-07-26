@@ -9,7 +9,8 @@ import UIKit
 import Kingfisher
 
 class PhotoCell: UICollectionViewCell {
-    // Outlets
+    
+    // MARK: IBOutlet
     @IBOutlet weak var imageView: UIImageView!
     
     override func prepareForReuse() {
