@@ -60,13 +60,10 @@ extension PhotosAlbumViewController: UICollectionViewDataSource {
                 print("no! please")
                 return cell
             }
-            cell.imageView.kf.setImage(with: url, placeholder: UIImage(named: "Placeholder"), options: nil, progressBlock: nil) { (img, err, cacheType, url) in
-                if ((err) != nil) {
-                    
-                } else {
-                    aPhoto.data = img?.pngData()
-                    try? self.dataController.viewContext.save()
-                }
+            AppClient.handleImageDataResponse(cell: cell, url: url) { img, error in
+                guard let img = img else { return }
+                aPhoto.data = img.pngData()
+                try? self.dataController.viewContext.save()
             }
         }
         

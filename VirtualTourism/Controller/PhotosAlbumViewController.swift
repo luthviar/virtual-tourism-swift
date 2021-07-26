@@ -25,6 +25,7 @@ class PhotosAlbumViewController: UIViewController {
     // MARK: Properties
     let estimatedItemsPerRow: CGFloat = 3
     let reuseId = "PhotoCell"
+    var totalPages = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +80,7 @@ class PhotosAlbumViewController: UIViewController {
     
     private func getPhotos() {
         setGetNewPhotosButtonEnabled(to: false)
-        AppClient.getListOfPhotosIn(lat: pin.latitude, lon: pin.longitude) { (error, photosURL) in
+        AppClient.getListOfPhotosIn(lat: pin.latitude, lon: pin.longitude, totalPages: totalPages) { (error, photosURL, totalPages) in
             // if photos is empty show empty background
             switch error {
             case .notConnected:
@@ -91,6 +92,7 @@ class PhotosAlbumViewController: UIViewController {
                 }
                 break
             case .connected:
+                self.totalPages = totalPages
                 for photoURL in photosURL! {                    
                     self.addPhoto(url: photoURL)
                 }
